@@ -19,10 +19,14 @@ describe "Authentication" do
       
       it { should have_title('Sign in') }
       it { should have_selector('div.alert.alert-error', text: 'Invalid') }
+      it { should_not have_link('Profile') }
+      it { should_not have_link('Settings') }
       
       describe "after visiting another page" do
         before { click_link "Home" }
         it { should_not have_selector('div.alert-error') }
+        it { should_not have_link('Profile') }
+        it { should_not have_link('Settings') }
       end
     end
     
@@ -71,16 +75,22 @@ describe "Authentication" do
         describe "visiting the edit page" do
           before { visit edit_user_path(user) }
           it { should have_title('Sign in') }
+          it { should_not have_link('Profile') }
+          it { should_not have_link('Settings') }
         end
         
         describe "submitting to the update action" do
           before { patch user_path(user) }
           specify { expect(response).to redirect_to(signin_path) }
+          it { should_not have_link('Profile') }
+          it { should_not have_link('Settings') }
         end
         
         describe "visiting the user index" do
           before { visit users_path }
           it { should have_title('Sign in') }
+          it { should_not have_link('Profile') }
+          it { should_not have_link('Settings') }
         end
       end
     end
