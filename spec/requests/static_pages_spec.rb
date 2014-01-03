@@ -25,7 +25,7 @@ describe "Static pages" do
         visit root_path
       end
       
-      describe "pagination" do
+      describe "feed pagination" do
         it { should have_selector('div.pagination') }
         
         it "should render the user's feed" do
@@ -33,6 +33,11 @@ describe "Static pages" do
             expect(page).to have_selector("li##{item.id}", text: item.content)
           end
         end
+      end
+      
+      describe "sidebar" do
+        it { should have_content(user.microposts.count) }
+        it { should have_content('microposts') }
       end
     end
   end
